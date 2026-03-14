@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ControlArma : MonoBehaviour
 {
     public int municionActual;
@@ -13,6 +14,7 @@ public class ControlArma : MonoBehaviour
     public Transform puntoSalida;
     private float ultimoTiempoDisparo;
     private bool esJugador;
+    private AudioSource audioDisparo;
 
     private void Awake()
     {
@@ -20,6 +22,7 @@ public class ControlArma : MonoBehaviour
             esJugador = true;
 
         balaPool = GetComponent<PoolObjetos>();
+        audioDisparo = GetComponent<AudioSource>();
     }
 
     public bool PuedeDisparar()
@@ -34,6 +37,8 @@ public class ControlArma : MonoBehaviour
     {
         ultimoTiempoDisparo = Time.time;
         municionActual--;
+
+        audioDisparo.Play();
 
         GameObject bala = balaPool.getObjeto();
         bala.transform.position = puntoSalida.position;
