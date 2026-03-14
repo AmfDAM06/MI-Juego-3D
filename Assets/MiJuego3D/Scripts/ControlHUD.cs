@@ -40,7 +40,7 @@ public class ControlHUD : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0.0f;
 
-        resultadoTexto.text = (ganado) ? "HAS GANDO!!" : "HAS PERDIDO!!";
+        resultadoTexto.text = (ganado) ? "HAS GANADO!!" : "HAS PERDIDO!!";
         resultadoTexto.color = (ganado) ? Color.green : Color.red;
     }
     public void OnBotonMenu()
