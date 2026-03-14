@@ -5,29 +5,27 @@ public class ControlArma : MonoBehaviour
     public int municionActual;
     public int municionMax;
     public bool municionInfinita;
+    public int dañoArma;
+    public float velocidadBala;
+    public float frecuenciaDisparo;
 
     private PoolObjetos balaPool;
     public Transform puntoSalida;
-
-    public float velocidadBala;
-
-    public float frecuenciaDisparo;
     private float ultimoTiempoDisparo;
     private bool esJugador;
 
-    
-
     private void Awake()
     {
-        if(transform.tag == "Jugador")
-            esJugador= true;
+        if (transform.root.CompareTag("Jugador"))
+            esJugador = true;
+
         balaPool = GetComponent<PoolObjetos>();
     }
 
     public bool PuedeDisparar()
     {
-        if(Time.time - ultimoTiempoDisparo >= frecuenciaDisparo)
-            if(municionActual > 0 ||municionInfinita == true)
+        if (Time.time - ultimoTiempoDisparo >= frecuenciaDisparo)
+            if (municionActual > 0 || municionInfinita)
                 return true;
         return false;
     }
@@ -42,6 +40,7 @@ public class ControlArma : MonoBehaviour
         bala.transform.rotation = puntoSalida.rotation;
 
         bala.GetComponent<Rigidbody>().linearVelocity = puntoSalida.forward * velocidadBala;
+        bala.GetComponent<ControlBala>().cantidadVida = dañoArma;
 
         if (esJugador)
             ControlHUD.instancia.actualizarBalasTexto(municionActual, municionMax);

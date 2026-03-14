@@ -14,17 +14,22 @@ public class ControlBala : MonoBehaviour
 
     private void Update()
     {
-        if(Time.time - tiempoDisparo >= tiempoActivo) gameObject.SetActive(false);
+        if (Time.time - tiempoDisparo >= tiempoActivo) gameObject.SetActive(false);
     }
+
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Jugador")) other.GetComponent<ControlJugador>().QuitarVidasJugador(cantidadVida);
-        else if(other.CompareTag("Enemigo")) other.GetComponent<ControlEnemigo>().QuitarVidasEnemigo(cantidadVida);
+        if (other.CompareTag("Jugador"))
+            other.GetComponent<ControlJugador>().QuitarVidasJugador(cantidadVida);
+        else if (other.CompareTag("Enemigo"))
+            other.GetComponent<ControlEnemigoMejorado>().QuitarVidasEnemigo(cantidadVida);
 
-        GameObject particulas = Instantiate(particulasExplosion, transform.position, Quaternion.identity);
-        Destroy(particulas, 1f);
+        if (particulasExplosion != null)
+        {
+            GameObject particulas = Instantiate(particulasExplosion, transform.position, Quaternion.identity);
+            Destroy(particulas, 1f);
+        }
 
         gameObject.SetActive(false);
-
     }
 }
